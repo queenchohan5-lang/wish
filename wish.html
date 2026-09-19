@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meri Pyari Dost 💗</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#fff;
+  background:linear-gradient(135deg,#ff5f7e,#ff8fb3,#ffd4df);
+  overflow-x:hidden;
+}
+
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:24px 15px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.screen.active{
+  display:flex;
+}
+
+.card{
+  width:min(760px,96vw);
+  padding:34px 22px;
+  border-radius:30px;
+  background:rgba(255,255,255,.17);
+  backdrop-filter:blur(15px);
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 18px 50px rgba(100,15,45,.22);
+}
+
+h1{
+  font-size:clamp(30px,8vw,52px);
+  margin:8px 0 15px;
+}
+
+h2{
+  font-size:clamp(25px,6vw,39px);
+  margin:8px 0 15px;
+}
+
+p{
+  font-size:17px;
+  line-height:1.65;
+}
+
+.btn{
+  border:0;
+  background:#fff;
+  color:#db3264;
+  padding:14px 27px;
+  border-radius:999px;
+  margin:8px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  transition:.25s;
+}
+
+.btn:hover{
+  transform:scale(1.06);
+}
+
+.heart{
+  font-size:72px;
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  50%{
+    transform:scale(1.13);
+  }
+}
+
+/* TIMER */
+
+.timer{
+  font-size:68px;
+  font-weight:900;
+  margin:15px;
+  text-shadow:0 5px 15px rgba(100,0,40,.2);
+}
+
+/* YES / NO */
+
+.choice-area{
+  height:125px;
+  position:relative;
+  margin-top:10px;
+}
+
+#noBtn{
+  position:absolute;
+}
+
+
+/* ================= PUZZLE ================= */
+
+.puzzle{
+  width:min(330px,82vw);
+  aspect-ratio:1;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+}
+
+.piece{
+  border:2px solid rgba(255,255,255,.9);
+  border-radius:12px;
+
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23fff0f5'/%3E%3Cpath d='M150 260S35 190 35 105C35 45 105 25 150 90c45-65 115-45 115 15 0 85-115 155-115 155z' fill='%23ff4f79'/%3E%3Ctext x='150' y='160' text-anchor='middle' font-size='25' font-family='Arial' font-weight='bold' fill='white'%3EHAPPY%3C/text%3E%3Ctext x='150' y='190' text-anchor='middle' font-size='25' font-family='Arial' font-weight='bold' fill='white'%3EBIRTHDAY%3C/text%3E%3C/svg%3E");
+
+  background-size:300% 300%;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.piece:hover{
+  transform:scale(.97);
+}
+
+.moves{
+  font-weight:bold;
+}
+
+
+/* ================= QUIZ ================= */
+
+.quiz-options{
+  display:grid;
+  gap:12px;
+  max-width:540px;
+  margin:22px auto;
+}
+
+.option{
+  border:0;
+  border-radius:18px;
+  padding:15px;
+  background:#fff;
+  color:#d92d62;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.option:hover{
+  transform:translateY(-3px);
+}
+
+.option:disabled{
+  opacity:.85;
+  cursor:default;
+}
+
+#quizReaction{
+  min-height:85px;
+  font-size:18px;
+  font-weight:bold;
+  line-height:1.55;
+  margin-top:18px;
+}
+
+
+/* ================= SCRATCH ================= */
+
+.scratch-box{
+  width:min(350px,90vw);
+  height:190px;
+  margin:24px auto;
+  background:#fff;
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 10px 25px rgba(100,15,45,.18);
+}
+
+.hidden-message{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#df3266;
+  font-size:21px;
+  font-weight:bold;
+  padding:20px;
+}
+
+#scratchCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  touch-action:none;
+  cursor:crosshair;
+}
+
+
+/* ================= MOMENTS ================= */
+
+.moments-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:17px;
+  max-width:650px;
+  margin:25px auto;
+}
+
+.moment-card{
+  min-height:220px;
+  border-radius:25px;
+  background:linear-gradient(145deg,#fff,#ffe3eb);
+  color:#d92d62;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(100,15,45,.2);
+  transition:.35s;
+  position:relative;
+  overflow:hidden;
+}
+
+.moment-card:before{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:#ffd2df;
+  top:-35px;
+  right:-35px;
+}
+
+.moment-card:hover{
+  transform:translateY(-8px) rotate(1deg);
+  box-shadow:0 18px 35px rgba(100,15,45,.25);
+}
+
+.fake-photo{
+  width:105px;
+  height:105px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ffd0de,#fff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  box-shadow:0 8px 20px rgba(200,40,90,.16);
+  z-index:1;
+}
+
+.moment-card h3{
+  margin:13px 5px 5px;
+  font-size:19px;
+  z-index:1;
+}
+
+.moment-card small{
+  opacity:.7;
+  z-index:1;
+}
+
+
+/* ================= POPUP ================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(75,10,40,.68);
+  z-index:50;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(560px,94vw);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  color:#d72e62;
+  border-radius:30px;
+  padding:28px;
+  position:relative;
+  animation:pop .3s ease;
+}
+
+@keyframes pop{
+  from{
+    transform:scale(.7);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.close{
+  position:absolute;
+  right:14px;
+  top:12px;
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#ffe2eb;
+  color:#d72e62;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.modal-photo{
+  width:135px;
+  height:135px;
+  border-radius:27px;
+  margin:5px auto 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:58px;
+  background:linear-gradient(135deg,#ffd2df,#fff0f5);
+}
+
+.modal-box p{
+  text-align:left;
+  white-space:pre-line;
+}
+
+
+/* ================= CONFETTI ================= */
+
+.confetti{
+  position:fixed;
+  top:-20px;
+  font-size:22px;
+  z-index:100;
+  animation:fall 2.8s linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+
+@media(max-width:520px){
+
+  .moments-grid{
+    gap:10px;
+  }
+
+  .moment-card{
+    min-height:175px;
+  }
+
+  .fake-photo{
+    width:78px;
+    height:78px;
+    font-size:35px;
+  }
+
+  .moment-card h3{
+    font-size:15px;
+  }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= COUNTDOWN ================= -->
+
+<section id="countdown" class="screen active">
+
+  <div class="card">
+
+    <div class="heart">💗</div>
+
+    <h1>A Little Surprise For You</h1>
+
+    <p>
+      Meri Pyari Dost Muater ke birthday surprise tak...
+    </p>
+
+    <div class="timer" id="timer">10</div>
+
+    <p>⏳ Just wait...</p>
+
+  </div>
+
+</section>
+
+
+<!-- ================= READY ================= -->
+
+<section id="ready" class="screen">
+
+  <div class="card">
+
+    <h1>🎁 Are You Ready?</h1>
+
+    <p>
+      Are you ready for your surprise,
+      Meri Pyari Dost? 👀💗
+    </p>
+
+    <div class="choice-area">
+
+      <button class="btn" id="yesBtn">
+        YES 💗
+      </button>
+
+      <button class="btn" id="noBtn">
+        NO 🙈
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CHOSEN ================= -->
+
+<section id="chosen" class="screen">
+
+  <div class="card">
+
+    <h1>Hehe 😌💗</h1>
+
+    <p>
+      I knew you would choose this! 🥹✨
+    </p>
+
+    <button class="btn" id="startPuzzle">
+      Continue 💕
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PUZZLE ================= -->
+
+<section id="puzzleScreen" class="screen">
+
+  <div class="card">
+
+    <h2>🧩 Rebuild the Heart</h2>
+
+    <p>
+      Pieces ko tap karke swap karo aur heart complete karo. ❤️
+    </p>
+
+    <div class="puzzle" id="puzzle"></div>
+
+    <div class="moves" id="moves">
+      Moves: 0
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= QUIZ ================= -->
+
+<section id="quizScreen" class="screen">
+
+  <div class="card">
+
+    <h2>🫶 A Little Friendship Quiz</h2>
+
+    <p id="quizQuestion"></p>
+
+    <div class="quiz-options" id="quizOptions"></div>
+
+    <div id="quizReaction"></div>
+
+    <button class="btn" id="nextQuiz" style="display:none">
+      Next 💗
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SCRATCH ================= -->
+
+<section id="scratchScreen" class="screen">
+
+  <div class="card">
+
+    <h2>🎟️ Scratch to Reveal</h2>
+
+    <p>
+      Scratch the card and see your little surprise. ✨
+    </p>
+
+    <div class="scratch-box">
+
+      <div class="hidden-message">
+        You are the reason for my happiness ✨💗
+      </div>
+
+      <canvas id="scratchCanvas"></canvas>
+
+    </div>
+
+    <p id="scratchStatus">
+      Scratch ittt 🥹💗
+    </p>
+
+    <button class="btn" id="toMoments" style="display:none">
+      Our Special Moments 📸
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MOMENTS ================= -->
+
+<section id="momentsScreen" class="screen">
+
+  <div class="card">
+
+    <h2>✨ Our Special Moments ✨</h2>
+
+    <p>
+      Some memories are too special to be forgotten... 🥹💗
+    </p>
+
+
+    <div class="moments-grid">
+
+
+      <!-- MOMENT 1 -->
+
+      <div class="moment-card" data-index="0">
+
+        <div class="fake-photo">
+          🌷
+        </div>
+
+        <h3>
+          My Biggest Support
+        </h3>
+
+        <small>
+          Tap to open 💕
+        </small>
+
+      </div>
+
+
+      <!-- MOMENT 2 -->
+
+      <div class="moment-card" data-index="1">
+
+        <div class="fake-photo">
+          📱
+        </div>
+
+        <h3>
+          My Favourite Notification
+        </h3>
+
+        <small>
+          Tap to open 💕
+        </small>
+
+      </div>
+
+
+      <!-- MOMENT 3 -->
+
+      <div class="moment-card" data-index="2">
+
+        <div class="fake-photo">
+          🫂
+        </div>
+
+        <h3>
+          Can't Go A Day Without You
+        </h3>
+
+        <small>
+          Tap to open 💕
+        </small>
+
+      </div>
+
+
+      <!-- MOMENT 4 -->
+
+      <div class="moment-card" data-index="3">
+
+        <div class="fake-photo">
+          🎀
+        </div>
+
+        <h3>
+          You Make Everything Better
+        </h3>
+
+        <small>
+          Tap to open 💕
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <button class="btn" id="toFinal">
+      Final Birthday Wishes 🎂
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MOMENT POPUP ================= -->
+
+<div class="modal" id="momentModal">
+
+  <div class="modal-box">
+
+    <button class="close" id="closeModal">
+      ×
+    </button>
+
+    <div class="modal-photo" id="modalPhoto">
+      🌷
+    </div>
+
+    <h2 id="modalTitle">
+      My Biggest Support
+    </h2>
+
+    <p id="modalStory"></p>
+
+  </div>
+
+</div>
+
+
+<!-- ================= FINAL ================= -->
+
+<section id="finalScreen" class="screen">
+
+  <div class="card">
+
+    <div class="heart">
+      🎂💗
+    </div>
+
+    <h1>
+      Happy Birthday, Muater! 🎉
+    </h1>
+
+    <p>
+      Happy Birthday to my Meri Pyari Dost! 🥹💗
+    </p>
+
+    <p>
+      May your life always be full of happiness,
+      love, laughter and beautiful memories. ✨
+    </p>
+
+    <p>
+      Thank you for being such a special part
+      of my life. 🫂
+    </p>
+
+    <p>
+      Stay happy, keep smiling and never change
+      the beautiful person you are. 💕
+    </p>
+
+    <h2>
+      Love you loads! 🎀✨
+    </h2>
+
+  </div>
+
+</section>
+
+
+
+<script>
+
+
+/* =====================================================
+   SCREEN SYSTEM
+===================================================== */
+
+const ids = [
+  "countdown",
+  "ready",
+  "chosen",
+  "puzzleScreen",
+  "quizScreen",
+  "scratchScreen",
+  "momentsScreen",
+  "finalScreen"
+];
+
+
+function show(id){
+
+  ids.forEach(sectionId => {
+
+    document
+      .getElementById(sectionId)
+      .classList.remove("active");
+
+  });
+
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+
+  window.scrollTo(0,0);
+}
+
+
+
+/* =====================================================
+   FIXED 10 SECOND COUNTDOWN
+
+   This uses elapsed time instead of depending on
+   setInterval firing exactly every second.
+===================================================== */
+
+const timer = document.getElementById("timer");
+
+const COUNTDOWN_SECONDS = 10;
+
+const countdownEnd =
+  Date.now() + (COUNTDOWN_SECONDS * 1000);
+
+let lastShown = COUNTDOWN_SECONDS;
+
+
+function updateCountdown(){
+
+  const remainingMs =
+    countdownEnd - Date.now();
+
+  const remaining =
+    Math.max(
+      0,
+      Math.ceil(remainingMs / 1000)
+    );
+
+
+  if(remaining !== lastShown){
+
+    lastShown = remaining;
+
+    timer.textContent = remaining;
+
+  }
+
+
+  if(remaining <= 0){
+
+    timer.textContent = "0";
+
+    setTimeout(() => {
+      show("ready");
+    },400);
+
+    return;
+
+  }
+
+
+  requestAnimationFrame(updateCountdown);
+
+}
+
+
+timer.textContent = COUNTDOWN_SECONDS;
+
+requestAnimationFrame(updateCountdown);
+
+
+
+/* =====================================================
+   YES / NO
+===================================================== */
+
+document
+  .getElementById("yesBtn")
+  .addEventListener("click", () => {
+
+    show("chosen");
+
+  });
+
+
+const noBtn =
+  document.getElementById("noBtn");
+
+
+function runAway(){
+
+  const area =
+    document.querySelector(".choice-area");
+
+
+  const maxX =
+    Math.max(
+      1,
+      area.clientWidth - noBtn.offsetWidth
+    );
+
+
+  const maxY =
+    Math.max(
+      1,
+      area.clientHeight - noBtn.offsetHeight
+    );
+
+
+  noBtn.style.left =
+    Math.random() * maxX + "px";
+
+
+  noBtn.style.top =
+    Math.random() * maxY + "px";
+
+}
+
+
+noBtn.addEventListener(
+  "pointerenter",
+  runAway
+);
+
+
+noBtn.addEventListener(
+  "click",
+  runAway
+);
+
+
+
+/* =====================================================
+   START PUZZLE
+===================================================== */
+
+document
+  .getElementById("startPuzzle")
+  .addEventListener("click", () => {
+
+    show("puzzleScreen");
+
+    initPuzzle();
+
+  });
+
+
+
+/* =====================================================
+   HEART PUZZLE
+===================================================== */
+
+let board = [];
+
+let selected = null;
+
+let moves = 0;
+
+
+function initPuzzle(){
+
+  board = [
+    0,1,2,
+    3,4,5,
+    6,7,8
+  ];
+
+
+  do{
+
+    board.sort(
+      () => Math.random() - 0.5
+    );
+
+  }while(
+    board.every(
+      (value,index) => value === index
+    )
+  );
+
+
+  selected = null;
+
+  moves = 0;
+
+  renderPuzzle();
+
+}
+
+
+function renderPuzzle(){
+
+  const puzzle =
+    document.getElementById("puzzle");
+
+
+  puzzle.innerHTML = "";
+
+
+  board.forEach((num,pos) => {
+
+    const button =
+      document.createElement("button");
+
+
+    button.className = "piece";
+
+
+    const x =
+      (num % 3) * 50;
+
+
+    const y =
+      Math.floor(num / 3) * 50;
+
+
+    button.style.backgroundPosition =
+      x + "% " + y + "%";
+
+
+    button.addEventListener(
+      "click",
+      () => pieceClick(pos)
+    );
+
+
+    puzzle.appendChild(button);
+
+  });
+
+
+  document.getElementById("moves")
+    .textContent =
+    "Moves: " + moves;
+
+}
+
+
+function pieceClick(pos){
+
+  if(selected === null){
+
+    selected = pos;
+
+    return;
+
+  }
+
+
+  if(selected === pos){
+
+    selected = null;
+
+    return;
+
+  }
+
+
+  [
+    board[selected],
+    board[pos]
+  ] = [
+    board[pos],
+    board[selected]
+  ];
+
+
+  selected = null;
+
+  moves++;
+
+  renderPuzzle();
+
+
+  if(
+    board.every(
+      (value,index) => value === index
+    )
+  ){
+
+    confetti();
+
+
+    setTimeout(() => {
+
+      show("quizScreen");
+
+      initQuiz();
+
+    },700);
+
+  }
+
+}
+
+
+
+/* =====================================================
+   FRIENDSHIP QUIZ
+===================================================== */
+
+const questions = [
+
+  [
+    "Agar kal se ham dono ki baat bilkul band ho jaye… tumhein sabse zyada kis cheez ki kami feel hogi?",
+
+    [
+      "Hamari daily talks",
+      "Hamari bakwas",
+      "Tumhara support",
+      "Tumhari presence"
+    ],
+
+    `Awww 🥹💗<br>
+     That actually means a lot to me.<br>
+     Lucky me to have you. 🫂✨`
+  ],
+
+
+  [
+    "Ham dono mein sabse zyada pagal kaun hai? 😂",
+
+    [
+      "Main",
+      "Tu",
+      "Dono equally",
+      "Ye question hi pagal hai 😭"
+    ],
+
+    `Waise ek baat bataun? 👀<br>
+     Tere saath guzra hua har random moment somehow meri favourite memory ban jata hai. 🥹💗`
+  ],
+
+
+  [
+    "Agar hamari friendship ka ek emoji hota, konsa hota? 👀",
+
+    [
+      "🫂",
+      "😂",
+      "💗",
+      "😭😂"
+    ],
+
+    `HAHAHA 😭😂<br>
+     I genuinely don't know how I got so lucky to have a friend like you. 🫂✨`
+  ],
+
+
+  [
+    "Hamari friendship ko describe karne ke liye ek word?",
+
+    [
+      "Chaotic 😂",
+      "Unbreakable 🫂",
+      "Cute 💗",
+      "All of the above 😭"
+    ],
+
+    `Okayyy next question! 👀<br>
+     Lekin pehle… ek virtual hug banta hai. 🫂💗`
+  ],
+
+
+  [
+    "Agar mujhe ek din ke liye tumhari life ka remote mil jaye…? 😂",
+
+    [
+      "Main sab control karungi",
+      "Main tumhein tang karungi",
+      "Main tumhara phone check karungi 👀",
+      "Remote wapas de do 😭"
+    ],
+
+    `Bas bas 😂💗<br>
+     Ab zyada emotional nahi hona… birthday girl ko surprise bhi toh complete karna hai! 🎂✨`
+  ]
+
+];
+
+
+let qi = 0;
+
+
+function initQuiz(){
+
+  qi = 0;
+
+  loadQuiz();
+
+}
+
+
+function loadQuiz(){
+
+  const question =
+    questions[qi];
+
+
+  document.getElementById(
+    "quizQuestion"
+  ).textContent =
+    question[0];
+
+
+  const box =
+    document.getElementById(
+      "quizOptions"
+    );
+
+
+  box.innerHTML = "";
+
+
+  document.getElementById(
+    "quizReaction"
+  ).innerHTML = "";
+
+
+  document.getElementById(
+    "nextQuiz"
+  ).style.display = "none";
+
+
+  question[1].forEach(text => {
+
+    const button =
+      document.createElement("button");
+
+
+    button.className = "option";
+
+    button.textContent = text;
+
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        [
+          ...box.children
+        ].forEach(option => {
+
+          option.disabled = true;
+
+        });
+
+
+        document.getElementById(
+          "quizReaction"
+        ).innerHTML =
+          question[2];
+
+
+        document.getElementById(
+          "nextQuiz"
+        ).style.display =
+          "inline-block";
+
+      }
+    );
+
+
+    box.appendChild(button);
+
+  });
+
+}
+
+
+document
+  .getElementById("nextQuiz")
+  .addEventListener("click", () => {
+
+    qi++;
+
+
+    if(qi < questions.length){
+
+      loadQuiz();
+
+    }else{
+
+      show("scratchScreen");
+
+      initScratch();
+
+    }
+
+  });
+
+
+
+/* =====================================================
+   SCRATCH CARD
+===================================================== */
+
+let canvas;
+
+let ctx;
+
+let drawing = false;
+
+let revealed = false;
+
+
+function initScratch(){
+
+  canvas =
+    document.getElementById(
+      "scratchCanvas"
+    );
+
+
+  ctx =
+    canvas.getContext("2d");
+
+
+  const box =
+    canvas.parentElement;
+
+
+  const rect =
+    box.getBoundingClientRect();
+
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+
+  canvas.width =
+    Math.max(
+      1,
+      Math.round(rect.width * dpr)
+    );
+
+
+  canvas.height =
+    Math.max(
+      1,
+      Math.round(rect.height * dpr)
+    );
+
+
+  canvas.style.width =
+    rect.width + "px";
+
+
+  canvas.style.height =
+    rect.height + "px";
+
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+
+  /* Silver coating */
+
+  ctx.globalCompositeOperation =
+    "source-over";
+
+
+  ctx.fillStyle =
+    "#bfc1c5";
+
+
+  ctx.fillRect(
+    0,
+    0,
+    rect.width,
+    rect.height
+  );
+
+
+  /* Silver shine */
+
+  for(
+    let i = -rect.height;
+    i < rect.width + rect.height;
+    i += 18
+  ){
+
+    ctx.strokeStyle =
+      "rgba(255,255,255,.28)";
+
+    ctx.lineWidth = 7;
+
+    ctx.beginPath();
+
+    ctx.moveTo(i,0);
+
+    ctx.lineTo(
+      i + rect.height,
+      rect.height
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  ctx.fillStyle =
+    "#777980";
+
+
+  ctx.font =
+    "bold 24px Arial";
+
+
+  ctx.textAlign = "center";
+
+  ctx.textBaseline = "middle";
+
+
+  ctx.fillText(
+    "SCRATCH HERE ✨",
+    rect.width / 2,
+    rect.height / 2
+  );
+
+
+  ctx.globalCompositeOperation =
+    "destination-out";
+
+
+  revealed = false;
+
+
+  document.getElementById(
+    "scratchStatus"
+  ).textContent =
+    "Scratch ittt 🥹💗";
+
+
+  document.getElementById(
+    "toMoments"
+  ).style.display =
+    "none";
+
+}
+
+
+function getPointerPosition(event){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  return {
+    x:event.clientX - rect.left,
+    y:event.clientY - rect.top
+  };
+
+}
+
+
+function scratch(event){
+
+  const point =
+    getPointerPosition(event);
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+    point.x,
+    point.y,
+    25,
+    0,
+    Math.PI * 2
+  );
+
+
+  ctx.fill();
+
+
+  checkScratch();
+
+}
+
+
+function checkScratch(){
+
+  const pixels =
+    ctx.getImageData(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    ).data;
+
+
+  let clear = 0;
+
+
+  for(
+    let i = 3;
+    i < pixels.length;
+    i += 4
+  ){
+
+    if(pixels[i] === 0){
+
+      clear++;
+
+    }
+
+  }
+
+
+  const percentage =
+    clear / (pixels.length / 4);
+
+
+  if(
+    percentage > .55 &&
+    !revealed
+  ){
+
+    revealed = true;
+
+
+    document.getElementById(
+      "scratchStatus"
+    ).textContent =
+      "Surprise revealed! 🥹💗";
+
+
+    document.getElementById(
+      "toMoments"
+    ).style.display =
+      "inline-block";
+
+
+    confetti();
+
+  }
+
+}
+
+
+document
+  .getElementById("scratchCanvas")
+  .addEventListener(
+    "pointerdown",
+    event => {
+
+      drawing = true;
+
+      canvas.setPointerCapture?.(
+        event.pointerId
+      );
+
+      scratch(event);
+
+    }
+  );
+
+
+document
+  .getElementById("scratchCanvas")
+  .addEventListener(
+    "pointermove",
+    event => {
+
+      if(drawing){
+
+        scratch(event);
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById("scratchCanvas")
+  .addEventListener(
+    "pointerup",
+    event => {
+
+      drawing = false;
+
+      canvas.releasePointerCapture?.(
+        event.pointerId
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("scratchCanvas")
+  .addEventListener(
+    "pointercancel",
+    () => {
+
+      drawing = false;
+
+    }
+  );
+
+
+document
+  .getElementById("toMoments")
+  .addEventListener(
+    "click",
+    () => {
+
+      show("momentsScreen");
+
+    }
+  );
+
+
+
+/* =====================================================
+   SPECIAL MOMENTS
+===================================================== */
+
+const momentData = [
+
+
+  [
+    "🌷 My Biggest Support",
+
+    "🌷",
+
+    `Meri har ulti seedhi harkat mein mera saath dena… 😭😂
+
+Chahe idea kitna bhi pagal ho, tera pehla reaction hota hai: “Chal karte hain!”
+
+Aur agar kaam ulta ho bhi jaye, tu kabhi “maine kaha tha na” nahi kehti…
+
+Bas kehti hai: “Koi baat nahi, hum theek kar lenge.” 🥹🫂
+
+And honestly, that kind of support is rare. 💗`
+  ],
+
+
+  [
+    "📱 My Favourite Notification",
+
+    "📱",
+
+    `I swear, tera naam notification mein dekhna is a different kind of happiness. 🥹📱💗
+
+Chahe tera message sirf “fot hogi kia” ho…
+
+Phir bhi mera favourite hota hai. 😂
+
+You’re literally my favourite notification. ✨`
+  ],
+
+
+  [
+    "🫂 Can't Go A Day Without You",
+
+    "🫂",
+
+    `I don't think I can go even one whole day without talking to you. 😭
+
+Hamari random conversations, useless discussions, bakwas aur woh “sunnnn krbr hogi” wale messages… 😂💗
+
+Kabhi kabhi baat karne ko kuch hota bhi nahi, phir bhi teri baat karni hoti hai.
+
+Because somehow, talking to you just feels like home. 🫂✨`
+  ],
+
+
+  [
+    "🎀 You Make Everything Better",
+
+    "🎀",
+
+    `Mere good days ko aur better banana aur mere bad days ko thoda easier kar dena… that's you. 🥹💗
+
+Tu meri problems magically solve nahi karti, but tu saath khari hoti hai — aur kabhi kabhi bas itna hi enough hota hai.
+
+“Koi baat nahi, hum dekh lenge.”
+
+And somehow, those words make everything feel okay. 🫂🌷`
+  ]
+
+];
+
+
+
+/* =====================================================
+   MOMENT POPUPS
+===================================================== */
+
+const modal =
+  document.getElementById(
+    "momentModal"
+  );
+
+
+document
+  .querySelectorAll(".moment-card")
+  .forEach(card => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        const data =
+          momentData[
+            Number(card.dataset.index)
+          ];
+
+
+        document.getElementById(
+          "modalPhoto"
+        ).textContent =
+          data[1];
+
+
+        document.getElementById(
+          "modalTitle"
+        ).textContent =
+          data[0];
+
+
+        document.getElementById(
+          "modalStory"
+        ).textContent =
+          data[2];
+
+
+        modal.classList.add("show");
+
+      }
+    );
+
+  });
+
+
+document
+  .getElementById("closeModal")
+  .addEventListener(
+    "click",
+    () => {
+
+      modal.classList.remove("show");
+
+    }
+  );
+
+
+modal.addEventListener(
+  "click",
+  event => {
+
+    if(event.target === modal){
+
+      modal.classList.remove("show");
+
+    }
+
+  }
+);
+
+
+
+/* =====================================================
+   FINAL
+===================================================== */
+
+document
+  .getElementById("toFinal")
+  .addEventListener(
+    "click",
+    () => {
+
+      modal.classList.remove("show");
+
+      show("finalScreen");
+
+      confetti();
+
+    }
+  );
+
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+function confetti(){
+
+  const emojis = [
+    "💗",
+    "💕",
+    "✨",
+    "🎀",
+    "🌸",
+    "💖",
+    "🥹",
+    "🎉"
+  ];
+
+
+  for(
+    let i = 0;
+    i < 38;
+    i++
+  ){
+
+    const span =
+      document.createElement("span");
+
+
+    span.className =
+      "confetti";
+
+
+    span.textContent =
+      emojis[
+        Math.floor(
+          Math.random() *
+          emojis.length
+        )
+      ];
+
+
+    span.style.left =
+      Math.random() * 100 + "vw";
+
+
+    span.style.animationDelay =
+      Math.random() * .6 + "s";
+
+
+    document.body.appendChild(span);
+
+
+    setTimeout(
+      () => span.remove(),
+      3200
+    );
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
